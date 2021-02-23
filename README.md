@@ -49,6 +49,7 @@ depois disso precisamos separar todos os index desse snmp exempo : (4194328576 =
 
 ## 3° passo: Depois que ja identificamos todos os index com suas determinadas PON´s nos vamos para o grafana onde iremos personalizar de acordo com nossa demanda, por default eu deixei somente a gpon 0/3/0 ate a 0/3/15, mas vocês podem adicionar com sua demanda, para fazer isso você só vai replicar o painel e trocar o index na parte de ITENS para seu respectivo index da PON. no grafana eu adicionei algumas fuctions onde eu retiro todo resultado que é = 2 (OFFLINE) e só deixo oq for respectivo = 1 (ONLINE) depois disso agrupei em um grupo q faz a media dentro de 5 minutos e soma este valor.
 
+![PAINEL PONS](https://github.com/matheusandrades/Zabbix-Grafana/blob/main/img/photo5019462669371025655.jpg)
 
 Na verdade o processo é o seguinte quando realizamos a consulta pelo zabbix atraves do oid iso.3.6.1.2.1.31.1.1.1.1 declaramos uma variavel e feito isso usamos ela no nome do item de descoberta, feito isso usamos uma formula regex pra retornar todos os itens de determinada pon, depois aplicamos as funções no grafana e Badunts temos nosso resultado.
 
