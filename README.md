@@ -7,7 +7,7 @@
 
 
 
-### 1° passo: Faça o download dos templates que disponibilizei no repositorio, feito isso importe para o ZABBIX e para o GRAFANA, depois de importa os templates, devemos experar retornar os valores no zabbix e depois partimos para o grafana.
+### 1° passo: Faça o download dos templates que disponibilizei no repositorio, feito isso importe para o ZABBIX e para o GRAFANA, depois de importa os templates, devemos esperar retornar os valores no zabbix e depois partimos para o grafana.
 
 
 ## 2° passo: Precisamos consultar a biblioteca de index de determinada PON, para isso vamos o snmpwalk com o oid iso.3.6.1.2.1.31.1.1.1.1, ele ira nos retorna algo semelhante : 
