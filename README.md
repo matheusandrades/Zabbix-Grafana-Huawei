@@ -1,5 +1,5 @@
 # Zabbix-Grafana
-
+![PAINEL PONS](https://github.com/matheusandrades/Zabbix-Grafana/blob/main/img/photo5019462669371025653.jpg)
 
 ## Olá hoje venho trazer pra vocês uma solução de tratar OID´s que contem "sub-index", neste exemplo vamos consultar o total de ONU online por PON de uma OLT HUAWEI que por padrão não existe 1 só oid que retorne este valor total. Como iremos realizar isso?
 
