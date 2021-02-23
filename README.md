@@ -10,6 +10,7 @@
 
 ## 2° passo: Precisamos consultar a biblioteca de index de determinada PON, para isso vamos o snmpwalk com o oid iso.3.6.1.2.1.31.1.1.1.1, ele ira nos retorna algo semelhante : 
 
+
 IF-MIB::ifName.4194328576 = STRING: GPON 0/3/0
 IF-MIB::ifName.4194328832 = STRING: GPON 0/3/1
 IF-MIB::ifName.4194329088 = STRING: GPON 0/3/2
@@ -26,6 +27,7 @@ IF-MIB::ifName.4194331648 = STRING: GPON 0/3/12
 IF-MIB::ifName.4194331904 = STRING: GPON 0/3/13
 IF-MIB::ifName.4194332160 = STRING: GPON 0/3/14
 IF-MIB::ifName.4194332416 = STRING: GPON 0/3/15
+
 
 depois disso precisamos separar todos os index desse snmp exempo : (4194328576 = GPON 0/3/0), vamos ultilar somente a informação do index que é onde q vemos que o numero 4194328576 é referente a PON 0/3/0, no template que disponibilizei ja existem algumas criadas entao vocês só precisam adicionar de acordo com sua demanda. Tambem ja deixei disponibilizado uma "biblioteca" de index porem só vai da pon 0/1/x ate a 0/7/x.
 
