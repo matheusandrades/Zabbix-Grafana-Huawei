@@ -54,7 +54,7 @@ depois disso precisamos separar todos os index desse snmp exempo : (4194328576 =
 Na verdade o processo é o seguinte quando realizamos a consulta pelo zabbix atraves do oid iso.3.6.1.2.1.31.1.1.1.1 declaramos uma variavel e feito isso usamos ela no nome do item de descoberta, feito isso usamos uma formula regex pra retornar todos os itens de determinada pon, depois aplicamos as funções no grafana e Badunts temos nosso resultado.
 
 
-![PAINEL PONS] (https://github.com/matheusandrades/Zabbix-Grafana-Huawei/blob/main/img/photo5019462669371025656.jpg)
+![PAINEL PONS](https://github.com/matheusandrades/Zabbix-Grafana-Huawei/blob/main/img/photo5019462669371025656.jpg)
 
 
 
