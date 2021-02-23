@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2021-02-23T13:19:43Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template Module Discovery OLT Huawei</template>
+            <name>Template Module Discovery OLT Huawei</name>
+            <description>Template adaptador por Matheus da Silva Andrade  &#13;
+&#13;
+24-981677124</description>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Distancia ONU</name>
+                </application>
+                <application>
+                    <name>pon</name>
+                </application>
+                <application>
+                    <name>Sinal ONU Cliente</name>
+                </application>
+                <application>
+                    <name>Slot Porta PON</name>
+                </application>
+                <application>
+                    <name>Status ONU</name>
+                </application>
+                <application>
+                    <name>Temperatura</name>
+                </application>
+                <application>
+                    <name>teste</name>
+                </application>
+            </applications>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>Discovery ONU</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#OLTPORT},ifName,{#SNMPVALUE},1.3.6.1.4.1.2011.6.128.1.1.2.43.1.9]</snmp_oid>
+                    <key>pon.desc</key>
+                    <delay>15s</delay>
+                    <lifetime>0</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>status {#SNMPVALUE}  {#SNMPINDEX}</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>.1.3.6.1.4.1.2011.6.128.1.1.2.46.1.15.{#SNMPINDEX}</snmp_oid>
+                            <key>.1.3.6.1.4.1.2011.6.128.1.1.2.46.1.15.[{#SNMPVALUE}]</key>
+                            <delay>5m</delay>
+                            <history>30d</history>
+                            <trends>0</trends>
+                            <applications>
+                                <application>
+                                    <name>Status ONU</name>
+                                </application>
+                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>clientes online</name>
+                                </application_prototype>
+                            </application_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+    </templates>
+</zabbix_export>

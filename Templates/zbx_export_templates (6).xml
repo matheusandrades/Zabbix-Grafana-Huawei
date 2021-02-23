@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2021-02-23T13:25:06Z</date>
+    <groups>
+        <group>
+            <name>GPON</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>HUAWEI OLT</template>
+            <name>HUAWEI OLT</name>
+            <templates>
+                <template>
+                    <name>Template Module ICMP Ping</name>
+                </template>
+            </templates>
+            <groups>
+                <group>
+                    <name>GPON</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>CPU OLT</name>
+                </application>
+                <application>
+                    <name>EthSpeed</name>
+                </application>
+                <application>
+                    <name>OLT_HW</name>
+                </application>
+                <application>
+                    <name>ONU</name>
+                </application>
+                <application>
+                    <name>ONU - Distancia</name>
+                </application>
+                <application>
+                    <name>ONU - Distancia d</name>
+                </application>
+                <application>
+                    <name>ONU - STATUS</name>
+                </application>
+                <application>
+                    <name>ONU -TEMPERATURA</name>
+                </application>
+                <application>
+                    <name>Temp OLT</name>
+                </application>
+            </applications>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>OLT Boards</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#OLTBOARD},1.3.6.1.4.1.2011.6.3.3.2.1.1]</snmp_oid>
+                    <key>hwSlotIndex</key>
+                    <delay>6h</delay>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>Board {#SNMPINDEX} temp</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2011.6.3.3.2.1.13.{#SNMPINDEX}</snmp_oid>
+                            <key>OltBoardCpuTemp[{#SNMPINDEX}]</key>
+                            <delay>10m</delay>
+                            <history>2w</history>
+                            <units>ºC</units>
+                            <applications>
+                                <application>
+                                    <name>OLT_HW</name>
+                                </application>
+                            </applications>
+                            <request_method>POST</request_method>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Olt CPU util board {#SNMPINDEX}</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2011.2.6.7.1.1.2.1.5.{#SNMPINDEX}</snmp_oid>
+                            <key>OltCpuUtilBoard[{#SNMPINDEX}]</key>
+                            <delay>5m</delay>
+                            <units>%</units>
+                            <applications>
+                                <application>
+                                    <name>OLT_HW</name>
+                                </application>
+                            </applications>
+                            <request_method>POST</request_method>
+                        </item_prototype>
+                    </item_prototypes>
+                    <request_method>POST</request_method>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>OLT IF</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#OLTPORT},ifName,{#SNMPVALUE},1.3.6.1.4.1.2011.6.128.1.1.2.43.1.9]</snmp_oid>
+                    <key>olt_pcb</key>
+                    <delay>10m</delay>
+                    <lifetime>1w</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>Olt link state {#OLTPORT}</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2011.6.128.1.1.2.21.1.10.{#SNMPINDEX}</snmp_oid>
+                            <key>OltLinktState[{#OLTPORT}]</key>
+                            <delay>10m</delay>
+                            <trends>90d</trends>
+                            <description>1 - link,&#13;
+2 - down</description>
+                            <applications>
+                                <application>
+                                    <name>OLT_HW</name>
+                                </application>
+                            </applications>
+                            <request_method>POST</request_method>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{diff()}=1&#13;
+and&#13;
+{last()}=2</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>{diff()}=1&#13;
+and&#13;
+{last()}=1</recovery_expression>
+                                    <name>Interface status changed {#OLTPORT} - link down</name>
+                                    <priority>DISASTER</priority>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Qt {#OLTPORT}</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2011.6.128.1.1.2.21.1.16.{#SNMPINDEX}</snmp_oid>
+                            <key>qtont[{#OLTPORT}]</key>
+                            <delay>60m</delay>
+                            <trends>90d</trends>
+                            <description>1 - link,&#13;
+2 - down</description>
+                            <applications>
+                                <application>
+                                    <name>OLT_HW</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>OLT interface status $1</name>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>HUAWEI OLT</host>
+                                        <key>OltLinktState[{#OLTPORT}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                    <request_method>POST</request_method>
+                </discovery_rule>
+            </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$SNMP_COMMUNITY}</macro>
+                    <value>public</value>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>
