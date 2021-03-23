@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2021-03-23T21:45:17Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Huawei OLT - GPON</template>
+            <name>Huawei OLT - GPON</name>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>CLIENTES</name>
+                </application>
+                <application>
+                    <name>GPON</name>
+                </application>
+            </applications>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>Interfaces GPON</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#IFDESCR},.1.3.6.1.2.1.31.1.1.1.1]</snmp_oid>
+                    <key>ifPonDescr</key>
+                    <delay>5m</delay>
+                    <filter>
+                        <conditions>
+                            <condition>
+                                <macro>{#IFDESCR}</macro>
+                                <value>GPON.*</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>Clientes Offline na PON [{#IFDESCR}]</name>
+                            <type>TRAP</type>
+                            <key>ClientesOffline[{#SNMPINDEX}]</key>
+                            <delay>0</delay>
+                            <applications>
+                                <application>
+                                    <name>CLIENTES</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Clientes Online na PON [{#IFDESCR}]</name>
+                            <type>TRAP</type>
+                            <key>ClientesOnline[{#SNMPINDEX}]</key>
+                            <delay>0</delay>
+                            <applications>
+                                <application>
+                                    <name>CLIENTES</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Instancia o Script na PON {#IFDESCR}</name>
+                            <type>EXTERNAL</type>
+                            <key>huaweiGetOlt.php[{HOST.CONN},{HOST.HOST},{#SNMPINDEX}]</key>
+                            <delay>5m</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>CLIENTES</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Status Operacional da Interface</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2011.6.128.1.1.2.21.1.10.{#SNMPINDEX}</snmp_oid>
+                            <key>ifOperStatus[{#SNMPINDEX}]</key>
+                            <delay>5m</delay>
+                            <applications>
+                                <application>
+                                    <name>GPON</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>Total Clientes na PON [{#IFDESCR}]</name>
+                            <type>TRAP</type>
+                            <key>TotalClientes[{#SNMPINDEX}]</key>
+                            <delay>0</delay>
+                            <applications>
+                                <application>
+                                    <name>CLIENTES</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                    </item_prototypes>
+                    <trigger_prototypes>
+                        <trigger_prototype>
+                            <expression>{Huawei OLT - GPON:ifOperStatus[{#SNMPINDEX}].last()}=2 and {Huawei OLT - GPON:TotalClientes[{#SNMPINDEX}].last()}&gt;0</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>{Huawei OLT - GPON:ifOperStatus[{#SNMPINDEX}].last()}=1</recovery_expression>
+                            <name>OLT GPON status down {#IFDESCR}</name>
+                            <priority>DISASTER</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <expression>{Huawei OLT - GPON:ifOperStatus[{#SNMPINDEX}].last()}=1  and {Huawei OLT - GPON:ClientesOffline[{#SNMPINDEX}].last()}&gt;={Huawei OLT - GPON:ClientesOffline[{#SNMPINDEX}].prev()}+{Huawei OLT - GPON:ClientesOffline[{#SNMPINDEX}].prev()}*0.45 and {Huawei OLT - GPON:ClientesOffline[{#SNMPINDEX}].prev()}&gt;0</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>{Huawei OLT - GPON:ifOperStatus[{#SNMPINDEX}].last()}=1 and {Huawei OLT - GPON:ClientesOffline[{#SNMPINDEX}].last()}&lt;{Huawei OLT - GPON:ClientesOffline[{#SNMPINDEX}].prev()}</recovery_expression>
+                            <name>Queda de ONUS na PON [{#IFDESCR}</name>
+                            <priority>HIGH</priority>
+                            <description>Ultimo valor de ONU's offline for maior ou igual ao Anterios+45%</description>
+                            <manual_close>YES</manual_close>
+                        </trigger_prototype>
+                    </trigger_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>ONUS PON {#IFDESCR}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>0040FF</color>
+                                    <item>
+                                        <host>Huawei OLT - GPON</host>
+                                        <key>TotalClientes[{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>00FF00</color>
+                                    <item>
+                                        <host>Huawei OLT - GPON</host>
+                                        <key>ClientesOnline[{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>3</sortorder>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>FF0000</color>
+                                    <item>
+                                        <host>Huawei OLT - GPON</host>
+                                        <key>ClientesOffline[{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$SNMP_COMMUNITY}</macro>
+                    <value>public</value>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>
