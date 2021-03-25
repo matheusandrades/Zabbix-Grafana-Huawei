@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2021-03-24T20:40:59Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Huawei - OLT ONU</template>
+            <name>Huawei - OLT ONU</name>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Network Interfaces</name>
+                </application>
+                <application>
+                    <name>OLT - Cards</name>
+                </application>
+                <application>
+                    <name>OLT - Cards Manager</name>
+                </application>
+                <application>
+                    <name>OLT - ONU</name>
+                </application>
+                <application>
+                    <name>OLT - PON</name>
+                </application>
+                <application>
+                    <name>OLT - ServiceName</name>
+                </application>
+                <application>
+                    <name>PONs</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>Total de ONT - Offline - QueryFail</name>
+                    <type>EXTERNAL</type>
+                    <key>huawei-olt-onu-status.py[onuOfflineCause,{HOST.NAME},-1]</key>
+                    <applications>
+                        <application>
+                            <name>OLT - ONU</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Total de ONT - Offline - LOS</name>
+                    <type>EXTERNAL</type>
+                    <key>huawei-olt-onu-status.py[onuOfflineCause,{HOST.NAME},1]</key>
+                    <applications>
+                        <application>
+                            <name>OLT - ONU</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Total de ONT - Offline - LOSI</name>
+                    <type>EXTERNAL</type>
+                    <key>huawei-olt-onu-status.py[onuOfflineCause,{HOST.NAME},2]</key>
+                    <applications>
+                        <application>
+                            <name>OLT - ONU</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Total de ONT - Offline - LOFI</name>
+                    <type>EXTERNAL</type>
+                    <key>huawei-olt-onu-status.py[onuOfflineCause,{HOST.NAME},3]</key>
+                    <applications>
+                        <application>
+                            <name>OLT - ONU</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Total de ONT - Offline - Energia</name>
+                    <type>EXTERNAL</type>
+                    <key>huawei-olt-onu-status.py[onuOfflineCause,{HOST.NAME},13]</key>
+                    <applications>
+                        <application>
+                            <name>OLT - ONU</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Total de ONT - Online</name>
+                    <type>EXTERNAL</type>
+                    <key>huawei-olt.py[items,{HOST.NAME},1,api,api]</key>
+                    <applications>
+                        <application>
+                            <name>OLT - ONU</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Total de ONT - Offline</name>
+                    <type>EXTERNAL</type>
+                    <key>huawei-olt.py[items,{HOST.NAME},2,api,api]</key>
+                    <applications>
+                        <application>
+                            <name>OLT - ONU</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Total de ONU com Signal Rx &lt; -24</name>
+                    <type>EXTERNAL</type>
+                    <key>huawei-olt.py[triggers,{HOST.NAME},&quot;Signal Rx&quot;,api,api]</key>
+                    <applications>
+                        <application>
+                            <name>OLT - ONU</name>
+                        </application>
+                    </applications>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>OLT - ONU</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#NAME},1.3.6.1.4.1.2011.6.128.1.1.2.43.1.9]</snmp_oid>
+                    <key>discovery[olt-onu]</key>
+                    <delay>6h</delay>
+                    <filter>
+                        <evaltype>AND</evaltype>
+                    </filter>
+                    <lifetime>3600s</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>ONT - Status - {#NAME}</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2011.6.128.1.1.2.46.1.15.{#SNMPINDEX}</snmp_oid>
+                            <key>1.3.6.1.4.1.2011.6.128.1.1.2.46.1.15.[{#SNMPINDEX}]</key>
+                            <delay>10m;m4,14,24,34,44,54</delay>
+                            <value_type>FLOAT</value_type>
+                            <description>Online – 1&#13;
+Offline – 2</description>
+                            <applications>
+                                <application>
+                                    <name>OLT - ONU</name>
+                                </application>
+                            </applications>
+                            <valuemap>
+                                <name>GPON STATUS</name>
+                            </valuemap>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>ONT - Distance - {#NAME}</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2011.6.128.1.1.2.46.1.20.{#SNMPINDEX}</snmp_oid>
+                            <key>1.3.6.1.4.1.2011.6.128.1.1.2.46.1.20.[{#SNMPINDEX}]</key>
+                            <delay>6h</delay>
+                            <value_type>FLOAT</value_type>
+                            <units>m</units>
+                            <applications>
+                                <application>
+                                    <name>OLT - ONU</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>ONT - LastDownCause - {#NAME}</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2011.6.128.1.1.2.46.1.24.{#SNMPINDEX}</snmp_oid>
+                            <key>1.3.6.1.4.1.2011.6.128.1.1.2.46.1.24.[{#SNMPINDEX}]</key>
+                            <delay>10m;m6,16,26,36,46,56</delay>
+                            <value_type>FLOAT</value_type>
+                            <applications>
+                                <application>
+                                    <name>OLT - ONU</name>
+                                </application>
+                            </applications>
+                            <valuemap>
+                                <name>hwGponDeviceOntControlLastDownCause</name>
+                            </valuemap>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>ONT - Signal Rx - {#NAME}</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2011.6.128.1.1.2.51.1.4.{#SNMPINDEX}</snmp_oid>
+                            <key>1.3.6.1.4.1.2011.6.128.1.1.2.51.1.4.[{#SNMPINDEX}]</key>
+                            <delay>10m;m2,12,22,32,42,52</delay>
+                            <value_type>FLOAT</value_type>
+                            <units>dBm</units>
+                            <applications>
+                                <application>
+                                    <name>OLT - ONU</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <params>0.01</params>
+                                </step>
+                            </preprocessing>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&lt;-24</expression>
+                                    <name>Signal Rx - {#NAME} menor que -24dBm # {ITEM.LASTVALUE}</name>
+                                    <status>DISABLED</status>
+                                    <priority>INFO</priority>
+                                    <description>Possível atenuação</description>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>ONT - Port Pon - {#NAME}</name>
+                            <type>EXTERNAL</type>
+                            <key>huawei-get-pon.sh[{HOST.CONN},{#SNMPINDEX}]</key>
+                            <delay>6h</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>OLT - ONU</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                    </item_prototypes>
+                    <trigger_prototypes>
+                        <trigger_prototype>
+                            <expression>{Huawei - OLT ONU:1.3.6.1.4.1.2011.6.128.1.1.2.46.1.15.[{#SNMPINDEX}].last()}=2&#13;
+and&#13;
+{Huawei - OLT ONU:1.3.6.1.4.1.2011.6.128.1.1.2.46.1.24.[{#SNMPINDEX}].last()}&lt;=3</expression>
+                            <name>Sem comunicação com a ONU - {#NAME}</name>
+                            <status>DISABLED</status>
+                            <priority>INFO</priority>
+                            <description>Possibilidade de fibra rompida</description>
+                            <manual_close>YES</manual_close>
+                        </trigger_prototype>
+                    </trigger_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <name>OLT - PONs</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#IFNAME},ifName,{#IFOPERSTATUS},.1.3.6.1.4.1.2011.6.128.1.1.2.21.1.10,{#IFTYPE},ifType]</snmp_oid>
+                    <key>discovery[olt-pons]</key>
+                    <delay>3600s</delay>
+                    <filter>
+                        <evaltype>AND</evaltype>
+                        <conditions>
+                            <condition>
+                                <macro>{#IFNAME}</macro>
+                                <value>GPON.*</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                            <condition>
+                                <macro>{#IFOPERSTATUS}</macro>
+                                <value>1</value>
+                                <formulaid>B</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>3600s</lifetime>
+                    <description>List of PONs</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>PON {#IFNAME} - ONU Status Offline</name>
+                            <type>EXTERNAL</type>
+                            <key>huawei-olt-onu-status.py[onuStatusPon,{HOST.NAME},{#IFNAME},0]</key>
+                            <delay>300s</delay>
+                            <applications>
+                                <application>
+                                    <name>OLT - PON</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>PON {#IFNAME} - ONU Status Online</name>
+                            <type>EXTERNAL</type>
+                            <key>huawei-olt-onu-status.py[onuStatusPon,{HOST.NAME},{#IFNAME},1]</key>
+                            <delay>300s</delay>
+                            <applications>
+                                <application>
+                                    <name>OLT - PON</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>PON {#IFNAME} - ONU Total</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>.1.3.6.1.4.1.2011.6.128.1.1.2.21.1.16.{#SNMPINDEX}</snmp_oid>
+                            <key>hwGponDeviceOltControlOntNum[{#SNMPINDEX}]</key>
+                            <applications>
+                                <application>
+                                    <name>OLT - PON</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+    </templates>
+    <value_maps>
+        <value_map>
+            <name>GPON STATUS</name>
+            <mappings>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>ONLINE</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>OFFILNE</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+        <value_map>
+            <name>hwGponDeviceOntControlLastDownCause</name>
+            <mappings>
+                <mapping>
+                    <value>-1</value>
+                    <newvalue>unknown / query fail</newvalue>
+                </mapping>
+                <mapping>
+                    <value>1</value>
+                    <newvalue>LOS(Loss of signal)</newvalue>
+                </mapping>
+                <mapping>
+                    <value>2</value>
+                    <newvalue>LOSI(Loss of signal for ONUi)</newvalue>
+                </mapping>
+                <mapping>
+                    <value>3</value>
+                    <newvalue>LOFI(Loss of frame of ONUi)</newvalue>
+                </mapping>
+                <mapping>
+                    <value>4</value>
+                    <newvalue>SFI(Signal fail of ONUi)</newvalue>
+                </mapping>
+                <mapping>
+                    <value>5</value>
+                    <newvalue>LOAI(Loss of acknowledge with ONUi)</newvalue>
+                </mapping>
+                <mapping>
+                    <value>6</value>
+                    <newvalue>LOAMI(Loss of PLOAM for ONUi)</newvalue>
+                </mapping>
+                <mapping>
+                    <value>7</value>
+                    <newvalue>deactive ONT fails</newvalue>
+                </mapping>
+                <mapping>
+                    <value>8</value>
+                    <newvalue>deactive ONT success</newvalue>
+                </mapping>
+                <mapping>
+                    <value>9</value>
+                    <newvalue>reset ONT</newvalue>
+                </mapping>
+                <mapping>
+                    <value>10</value>
+                    <newvalue>re-register ONT</newvalue>
+                </mapping>
+                <mapping>
+                    <value>11</value>
+                    <newvalue>pop up fail</newvalue>
+                </mapping>
+                <mapping>
+                    <value>13</value>
+                    <newvalue>dying-gasp</newvalue>
+                </mapping>
+                <mapping>
+                    <value>15</value>
+                    <newvalue>LOKI(Loss of key synch with ONUi)</newvalue>
+                </mapping>
+            </mappings>
+        </value_map>
+    </value_maps>
+</zabbix_export>

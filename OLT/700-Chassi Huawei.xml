@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2021-03-24T20:21:39Z</date>
+    <groups>
+        <group>
+            <name>Templates/Chassi</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>700-Chassi Huawei</template>
+            <name>700-Chassi Huawei</name>
+            <templates>
+                <template>
+                    <name>1000-Interfaces_Generico</name>
+                </template>
+                <template>
+                    <name>1003-SNMP</name>
+                </template>
+                <template>
+                    <name>1004-ICMP</name>
+                </template>
+                <template>
+                    <name>1006-Base_SNMPv2</name>
+                </template>
+                <template>
+                    <name>1800-Geral</name>
+                </template>
+                <template>
+                    <name>1801-PON</name>
+                </template>
+                <template>
+                    <name>1802-Placas Chassi</name>
+                </template>
+            </templates>
+            <groups>
+                <group>
+                    <name>Templates/Chassi</name>
+                </group>
+            </groups>
+            <macros>
+                <macro>
+                    <macro>{$FABRICANTE}</macro>
+                    <value>Chassi Huawei</value>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>
